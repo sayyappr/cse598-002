@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Continuous Diabetic Glucose Monitoring by Conditional Diffusion Insulin Control via Offline RL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f7fafc;
+      color: #1a202c;
+    }
+
+    header {
+      background: linear-gradient(135deg, #3182ce, #805ad5);
+      color: white;
+      padding: 2.5rem 1rem 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 0.5rem;
+      font-size: 1.9rem;
+      font-weight: 700;
+    }
+
+    header h2 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 400;
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3rem;
+    }
+
+    .section {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07);
+    }
+
+    .section h3 {
+      margin-top: 0;
+      font-size: 1.3rem;
+      border-bottom: 2px solid #edf2f7;
+      padding-bottom: 0.4rem;
+      margin-bottom: 0.75rem;
+      color: #2d3748;
+    }
+
+    .team-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+
+    .member-card {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: #f7fafc;
+      border-radius: 0.75rem;
+      padding: 0.75rem 1rem;
+      flex: 1 1 260px;
+    }
+
+    .member-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 999px;
+      object-fit: cover;
+      border: 2px solid #e2e8f0;
+      background: #e2e8f0;
+    }
+
+    .member-info h4 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .member-info p {
+      margin: 0.15rem 0 0;
+      font-size: 0.9rem;
+      color: #4a5568;
+    }
+
+    .badges {
+      margin-top: 0.25rem;
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      background: #ebf8ff;
+      color: #2b6cb0;
+      border: 1px solid #bee3f8;
+    }
+
+    .links-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .link-card {
+      flex: 1 1 220px;
+      background: #f7fafc;
+      border-radius: 0.75rem;
+      padding: 0.9rem 1rem;
+      border: 1px solid #e2e8f0;
+    }
+
+    .link-card h4 {
+      margin: 0 0 0.35rem;
+      font-size: 1rem;
+    }
+
+    .link-card p {
+      margin: 0 0 0.5rem;
+      font-size: 0.85rem;
+      color: #4a5568;
+    }
+
+    .link-card a {
+      font-size: 0.9rem;
+      text-decoration: none;
+      color: #2b6cb0;
+      font-weight: 600;
+    }
+
+    .link-card a:hover {
+      text-decoration: underline;
+    }
+
+    p {
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+
+    ul {
+      margin-top: 0.3rem;
+    }
+
+    ul li {
+      margin-bottom: 0.3rem;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .highlight {
+      background: #ebf8ff;
+      border-left: 4px solid #3182ce;
+      padding: 0.75rem 0.9rem;
+      border-radius: 0.5rem;
+      font-size: 0.95rem;
+      margin: 0.75rem 0;
+    }
+
+    .footer-note {
+      margin-top: 0.9rem;
+      font-size: 0.85rem;
+      color: #718096;
+    }
+
+    code {
+      font-family: "Fira Code", Menlo, Monaco, Consolas, "Courier New", monospace;
+      font-size: 0.9rem;
+      background: #edf2f7;
+      padding: 0.05rem 0.25rem;
+      border-radius: 0.25rem;
+    }
+
+    @media (max-width: 640px) {
+      header {
+        padding: 2rem 1rem 1.5rem;
+      }
+      header h1 {
+        font-size: 1.5rem;
+      }
+      .section {
+        padding: 1.25rem 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Continuous Diabetic Glucose Monitoring by Conditional Diffusion Insulin Control via Offline RL</h1>
+  <h2>CSE&nbsp;598: AI for Science — Fall 2025</h2>
+</header>
+
+<div class="container">
+
+  <!-- Team Section -->
+  <section class="section">
+    <h3>Team</h3>
+    <div class="team-grid">
+
+      <!-- Member 1 -->
+      <div class="member-card">
+        <!-- Replace src with your actual portrait path -->
+        <img src="img/sathvika.jpg" alt="Portrait of Sathvika Ayyappa Prabhu" class="member-avatar" />
+        <div class="member-info">
+          <h4>Sathvika Ayyappa Prabhu</h4>
+          <p>M.S.E. Computer Science &amp; Engineering, University of Michigan</p>
+          <div class="badges">
+            <span class="badge">RL &amp; Implementation</span>
+            <span class="badge">SimGlucose</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Member 2 -->
+      <div class="member-card">
+        <!-- Replace src with your collaborator’s portrait path -->
+        <img src="img/matthew.jpg" alt="Portrait of Matthew Manion" class="member-avatar" />
+        <div class="member-info">
+          <h4>Matthew Manion</h4>
+          <p>Department of Chemical Engineering, University of Michigan</p>
+          <div class="badges">
+            <span class="badge">Domain Modeling</span>
+            <span class="badge">Diabetes Dynamics</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Project Summary -->
+  <section class="section">
+    <h3>Project Overview</h3>
+    <p>
+      Type 1 diabetes management is a challenging process-control problem: insulin must be dosed continuously
+      in response to noisy, delayed, and partially observed glucose dynamics. Existing controllers such as
+      basal–bolus and PID are often tuned for specific settings and can struggle with out-of-distribution
+      events or highly stochastic patient behavior. :contentReference[oaicite:0]{index=0}
+    </p>
+    <p>
+      In this project, we investigate <strong>conditional diffusion models</strong> as offline reinforcement learning
+      policies for insulin control. Our policy learns a distribution over safe insulin boluses conditioned on
+      the current patient state (glucose, insulin-on-board, carbohydrate intake, etc.) and patient parameters,
+      using virtual patients from the SimGlucose / UVA–Padova environment as a testbed. :contentReference[oaicite:1]{index=1}
+    </p>
+    <p>
+      We compare our diffusion policy against several baselines—including the built-in basal–bolus controller,
+      PID control, tabular Q-learning, and TD3-BC—and evaluate on adult virtual patients using clinically
+      meaningful metrics such as Time-in-Range (TIR), Time-Below-Range (TBR), Time-Above-Range (TAR),
+      coefficient of variation, and mean blood glucose. :contentReference[oaicite:2]{index=2}
+    </p>
+    <div class="highlight">
+      <strong>Key idea:</strong> Treat insulin selection as a conditional generative modeling problem—rather than
+      outputting a single “best” action, learn a distribution over plausible, safe actions and sample from it.
+    </div>
+  </section>
+
+  <!-- Method / Approach -->
+  <section class="section">
+    <h3>Method</h3>
+    <p>
+      We formulate blood glucose control as an offline Markov decision process 
+      <em>M = (S, A, P, r, γ)</em>, where states encode glucose and context,
+      actions are continuous bolus doses, transitions are stochastic (meals, absorption, delays),
+      and rewards are derived from a clinical risk index that penalizes hypo- and hyperglycemia. :contentReference[oaicite:3]{index=3}
+    </p>
+    <ul>
+      <li>
+        <strong>State &amp; Conditions:</strong> current CGM glucose, carbohydrate intake, insulin-on-board,
+        recent trend, plus patient parameters (e.g., body weight, insulin sensitivity).
+      </li>
+      <li>
+        <strong>Action:</strong> continuous insulin bolus dose at 5-minute resolution.
+      </li>
+      <li>
+        <strong>Reward:</strong> negative risk index combining LBGI/HBGI to emphasize safety near the
+        physiological target range.
+      </li>
+      <li>
+        <strong>Policy:</strong> a conditional diffusion model π(a<sub>t</sub> | s<sub>t</sub>) that learns to generate
+        safe actions via denoising.
+      </li>
+    </ul>
+    <p>
+      During training, we use expert trajectories (basal–bolus controller) and an aggregation strategy where
+      low-performing model decisions are discarded and replaced with expert decisions in the replay buffer.
+      This yields a purely offline dataset while letting the diffusion policy gradually learn from increasingly
+      challenging situations. :contentReference[oaicite:4]{index=4}
+    </p>
+  </section>
+
+  <!-- Results Summary -->
+  <section class="section">
+    <h3>Results (High-Level)</h3>
+    <p>
+      On adult virtual patients, our diffusion-based policy achieves competitive or improved glucose control
+      compared to baseline controllers, with strong Time-in-Range and stable variability across long horizons
+      (1-day, 3-day, and 7-day trajectories). :contentReference[oaicite:5]{index=5}
+    </p>
+    <ul>
+      <li>
+        <strong>Adult group:</strong> diffusion policies are effective and robust when physiological dynamics are
+        relatively stable.
+      </li>
+      <li>
+        <strong>Generalization:</strong> a diffusion model trained only on body weight shows some ability to
+        generalize, but performance degrades for adolescents and children where glucose dynamics are noisier
+        and more variable. :contentReference[oaicite:6]{index=6}
+      </li>
+      <li>
+        <strong>Multi-parameter training:</strong> incorporating more patient parameters into the conditioning
+        improves flexibility but significantly increases compute requirements under stochastic transitions. :contentReference[oaicite:7]{index=7}
+      </li>
+    </ul>
+    <p>
+      Our findings support conditional generative modeling as a promising direction for safer, distribution-aware
+      controllers in closed-loop insulin delivery.
+    </p>
+  </section>
+
+  <!-- Downloads / Links -->
+  <section class="section">
+    <h3>Downloads &amp; Resources</h3>
+    <div class="links-grid">
+
+      <div class="link-card">
+        <h4>Final Report (PDF)</h4>
+        <p>
+          Full project write-up in ACM SIG format, including background, methodology, experiments,
+          and discussion of results.
+        </p>
+        <!-- Replace href with your actual writeup path -->
+        <a href="docs/final_report.pdf" target="_blank">View Report (PDF)</a>
+      </div>
+
+      <div class="link-card">
+        <h4>Presentation Slides</h4>
+        <p>
+          Slides from the in-class presentation summarizing motivation, approach, and key findings.
+        </p>
+        <!-- Replace href with your actual slides path -->
+        <a href="docs/presentation_slides.pdf" target="_blank">View Slides</a>
+      </div>
+
+      <div class="link-card">
+        <h4>Poster</h4>
+        <p>
+          Research poster used for the course poster session, including visualizations of training
+          behavior and evaluation metrics.
+        </p>
+        <!-- Optional but nice to include -->
+        <a href="docs/poster.pdf" target="_blank">View Poster</a>
+      </div>
+
+      <div class="link-card">
+        <h4>Software Package</h4>
+        <p>
+          Source code, environment configuration, and example scripts to reproduce the main experiments.
+        </p>
+        <!-- Replace href with your tar.gz or GitHub repo -->
+        <a href="https://github.com/YOUR_USERNAME/diffusion-glucose-control" target="_blank">
+          View Code / Download Tarball
+        </a>
+      </div>
+
+    </div>
+
+    <p class="footer-note">
+      To reproduce our main results, see the <code>README.md</code> in the repository for installation
+      instructions, environment setup, and a demo command for running evaluation on adult virtual patients.
+    </p>
+  </section>
+
+  <!-- Optional: Quick Project Summary for the Rubric -->
+  <section class="section">
+    <h3>Brief Project Summary</h3>
+    <p>
+      We study conditional diffusion models as offline reinforcement learning policies for insulin control in
+      Type 1 diabetes. Using SimGlucose virtual patients, we train a diffusion policy on expert trajectories
+      and evaluate its performance against standard controllers under realistic stochastic glucose dynamics.
+      Our results demonstrate that diffusion-based policies can provide safe, stable control for adult patients,
+      while highlighting open challenges in generalizing to younger patient groups and scaling to richer
+      multi-parameter conditioning.
+    </p>
+  </section>
+
+</div>
+
+</body>
+</html>

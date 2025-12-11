@@ -194,6 +194,72 @@
         padding: 1.25rem 1.25rem;
       }
     }
+
+    .section-results {
+        margin-top: 40px;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.6;
+    }
+
+    .results-card {
+        background: #ffffff;
+        padding: 22px 26px;
+        border-radius: 14px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        margin-top: 24px;
+    }
+
+    .results-card h4 {
+        margin-top: 0;
+        margin-bottom: 12px;
+        color: #333;
+    }
+
+    .results-expl {
+        margin-top: 10px;
+        color: #555;
+    }
+
+    table.results-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+        font-size: 0.95rem;
+    }
+
+    table.results-table th {
+        background: #f6f8fa;
+        padding: 10px;
+        text-align: left;
+        font-weight: 600;
+        border-bottom: 2px solid #e0e0e0;
+    }
+
+    table.results-table td {
+        padding: 10px;
+        border-bottom: 1px solid #eaeaea;
+    }
+
+    @media (max-width: 700px) {
+        table.results-table,
+        table.results-table thead,
+        table.results-table tbody,
+        table.results-table th,
+        table.results-table td,
+        table.results-table tr {
+        display: block;
+        }
+        table.results-table tr {
+        margin-bottom: 10px;
+        }
+        table.results-table td {
+        border: none;
+        padding-left: 0;
+        }
+    }
+
   </style>
 </head>
 <body>
@@ -213,7 +279,7 @@
       <!-- Member 1 -->
       <div class="member-card">
         <!-- Replace src with your actual portrait path -->
-        <img src="img/sathvika.jpg" alt="Portrait of Sathvika Ayyappa Prabhu" class="member-avatar" />
+        <img src="https://github.com/user-attachments/assets/fd562f07-81a4-4b96-8e4f-393aca3b6056" alt="Portrait of Sathvika Ayyappa Prabhu" class="member-avatar" />
         <div class="member-info">
           <h4>Sathvika Ayyappa Prabhu</h4>
           <p>M.S.E. Computer Science &amp; Engineering, University of Michigan</p>
@@ -227,7 +293,7 @@
       <!-- Member 2 -->
       <div class="member-card">
         <!-- Replace src with your collaborator’s portrait path -->
-        <img src="img/matthew.jpg" alt="Portrait of Matthew Manion" class="member-avatar" />
+        <img src="https://github.com/user-attachments/assets/b2940793-53fe-4edb-b414-bda21c8082bd" alt="Portrait of Matthew Manion" class="member-avatar" />
         <div class="member-info">
           <h4>Matthew Manion</h4>
           <p>Department of Chemical Engineering, University of Michigan</p>
@@ -248,24 +314,24 @@
       Type 1 diabetes management is a challenging process-control problem: insulin must be dosed continuously
       in response to noisy, delayed, and partially observed glucose dynamics. Existing controllers such as
       basal–bolus and PID are often tuned for specific settings and can struggle with out-of-distribution
-      events or highly stochastic patient behavior. :contentReference[oaicite:0]{index=0}
+      events or highly stochastic patient behavior.
     </p>
     <p>
       In this project, we investigate <strong>conditional diffusion models</strong> as offline reinforcement learning
       policies for insulin control. Our policy learns a distribution over safe insulin boluses conditioned on
       the current patient state (glucose, insulin-on-board, carbohydrate intake, etc.) and patient parameters,
-      using virtual patients from the SimGlucose / UVA–Padova environment as a testbed. :contentReference[oaicite:1]{index=1}
+      using virtual patients from the SimGlucose / UVA–Padova environment as a testbed.
     </p>
     <p>
       We compare our diffusion policy against several baselines—including the built-in basal–bolus controller,
       PID control, tabular Q-learning, and TD3-BC—and evaluate on adult virtual patients using clinically
       meaningful metrics such as Time-in-Range (TIR), Time-Below-Range (TBR), Time-Above-Range (TAR),
-      coefficient of variation, and mean blood glucose. :contentReference[oaicite:2]{index=2}
+      coefficient of variation, and mean blood glucose.
     </p>
-    <div class="highlight">
+    <!-- <div class="highlight">
       <strong>Key idea:</strong> Treat insulin selection as a conditional generative modeling problem—rather than
       outputting a single “best” action, learn a distribution over plausible, safe actions and sample from it.
-    </div>
+    </div> -->
   </section>
 
   <!-- Method / Approach -->
@@ -275,7 +341,7 @@
       We formulate blood glucose control as an offline Markov decision process 
       <em>M = (S, A, P, r, γ)</em>, where states encode glucose and context,
       actions are continuous bolus doses, transitions are stochastic (meals, absorption, delays),
-      and rewards are derived from a clinical risk index that penalizes hypo- and hyperglycemia. :contentReference[oaicite:3]{index=3}
+      and rewards are derived from a clinical risk index that penalizes hypo- and hyperglycemia.
     </p>
     <ul>
       <li>
@@ -298,12 +364,12 @@
       During training, we use expert trajectories (basal–bolus controller) and an aggregation strategy where
       low-performing model decisions are discarded and replaced with expert decisions in the replay buffer.
       This yields a purely offline dataset while letting the diffusion policy gradually learn from increasingly
-      challenging situations. :contentReference[oaicite:4]{index=4}
+      challenging situations.
     </p>
   </section>
 
   <!-- Results Summary -->
-  <section class="section">
+  <!-- <section class="section">
     <h3>Results (High-Level)</h3>
     <p>
       On adult virtual patients, our diffusion-based policy achieves competitive or improved glucose control
@@ -329,7 +395,116 @@
       Our findings support conditional generative modeling as a promising direction for safer, distribution-aware
       controllers in closed-loop insulin delivery.
     </p>
+  </section> -->
+  <section class="section-results">
+    <h3>Results</h3>
+    <p>
+      Our diffusion-based insulin dosing policy demonstrates strong performance on adult virtual patients,
+      achieving stable glucose control across 1-day, 3-day, and 7-day evaluation horizons.
+      Below we summarize quantitative metrics and qualitative observations.
+    </p>
+  
+    <ul>
+      <li><strong>Adults:</strong> Diffusion models perform robustly when physiological dynamics are relatively stable.</li>
+      <li><strong>Generalization:</strong> Training only on body weight yields partial generalization, but performance
+          decreases in noisier groups (adolescents, children).</li>
+      <li><strong>Multi-parameter conditioning:</strong> Increases expressive power but significantly raises compute
+          requirements under stochastic transitions.</li>
+    </ul>
+  
+    <p>
+      All methods are evaluated using clinically standard metrics: 
+      <strong>Time-in-Range (TIR)</strong>, <strong>Time-Below-Range (TBR)</strong>,
+      and <strong>coefficient of variation (CV)</strong>.  
+      Higher TIR is better; lower TBR/CV indicate safer and more stable glucose control.
+    </p>
+  
+    <!-- Card 1 -->
+    <div class="results-card">
+      <h4>24-hour Evaluation — Single Parameter (Body Weight Only)</h4>
+      <table class="results-table">
+        <thead>
+          <tr><th>Method</th><th>TIR (%)</th><th>TBR (%)</th><th>CV (%)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>PID Controller</td><td>68.2</td><td>6.1</td><td>32.1</td></tr>
+          <tr><td>Tabular Q-Learning</td><td>70.1</td><td>5.2</td><td>30.3</td></tr>
+          <tr><td>TD3-BC</td><td>71.8</td><td>4.5</td><td>28.4</td></tr>
+          <tr><td><strong>Diffusion Policy (ours)</strong></td><td><strong>100.0</strong></td><td><strong>0.0</strong></td><td>13.35</td></tr>
+          <tr><td>Clinical Controller</td><td>91.3</td><td>0.0</td><td>8.83</td></tr>
+        </tbody>
+      </table>
+      <p class="results-expl">
+        In the simplest conditioning setup, diffusion achieves <strong>perfect TIR</strong> and eliminates hypoglycemia,
+        while approaching the clinical controller in glucose stability (CV).
+      </p>
+    </div>
+  
+    <!-- Card 2 -->
+    <div class="results-card">
+      <h4>24-hour Evaluation — Multi-Parameter Conditioning</h4>
+      <table class="results-table">
+        <thead>
+          <tr><th>Method</th><th>TIR (%)</th><th>TBR (%)</th><th>CV (%)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Diffusion Policy (ours)</strong></td><td>58.9</td><td>0.0</td><td>16.9</td></tr>
+          <tr><td>Clinical Controller</td><td>94.2</td><td>0.0</td><td>14.8</td></tr>
+        </tbody>
+      </table>
+      <p class="results-expl">
+        With full multi-parameter inputs, the problem becomes harder. Diffusion maintains safety (0% TBR) but
+        underperforms the clinical controller in TIR, showing the challenge of learning from high-dimensional
+        stochastic data.
+      </p>
+    </div>
+  
+    <!-- Card 3 -->
+    <div class="results-card">
+      <h4>3-day Evaluation Horizon</h4>
+      <table class="results-table">
+        <thead>
+          <tr><th>Method</th><th>TIR (%)</th><th>TBR (%)</th><th>CV (%)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Tabular Q-Learning</td><td>60.2</td><td>11.2</td><td>35.9</td></tr>
+          <tr><td><strong>Diffusion Policy (ours)</strong></td><td>72.7</td><td>9.3</td><td>24.1</td></tr>
+          <tr><td>Clinical Controller</td><td>90.5</td><td>1.8</td><td>17.3</td></tr>
+        </tbody>
+      </table>
+      <p class="results-expl">
+        Over multi-day trajectories, diffusion clearly improves over tabular RL: higher TIR, reduced variability,
+        and fewer dangerous low-glucose events.
+      </p>
+    </div>
+  
+    <!-- Card 4 -->
+    <div class="results-card">
+      <h4>7-day Evaluation Horizon</h4>
+      <table class="results-table">
+        <thead>
+          <tr><th>Method</th><th>TIR (%)</th><th>TBR (%)</th><th>CV (%)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Tabular Q-Learning</td><td>68.3</td><td>7.8</td><td>33.1</td></tr>
+          <tr><td><strong>Diffusion Policy (ours)</strong></td><td>89.1</td><td>5.7</td><td>19.8</td></tr>
+          <tr><td>Clinical Controller</td><td>92.8</td><td>0.2</td><td>11.2</td></tr>
+        </tbody>
+      </table>
+      <p class="results-expl">
+        Over long 7-day simulations, diffusion remains stable and significantly outperforms tabular Q-learning.
+        While slightly behind the clinical controller in safety, the improvement over classical RL is substantial.
+      </p>
+    </div>
+  
+    <p style="margin-top: 32px;">
+      Overall, the results suggest that <strong>conditional diffusion models are a promising direction
+      for safe, distribution-aware insulin dosing policies</strong>, especially in stochastic physiological
+      environments.
+    </p>
   </section>
+  
+
 
   <!-- Downloads / Links -->
   <section class="section">

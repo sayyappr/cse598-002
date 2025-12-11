@@ -1,8 +1,28 @@
-# cse598-002
+# cse598-002 — Conditional Diffusion Insulin Control (Offline RL)
+CSE 598-002: AI for Science — Fall 2025
 
-For each of the code files, you will need to install the simglucose repository for the functional imports to work. 
-Otherwise, the conditional diffusion code should be self contained and work with common python packages. 
+This project implements a **conditional diffusion model** for safe insulin dosing in Type 1 diabetes using offline reinforcement learning. The model is trained on expert trajectories and evaluated on virtual patients from the SimGlucose / UVA–Padova environment.
 
-The wandb login codes will need to be changed to reflect future user's account, otherwise sections of the training code may not function correctly. 
-At the start of the training function, you can define a few hyperparameters and key variable sizes. Refer to where those variables are called in the code to determine if or when it is appropriate to change their numbers. 
-The action dimension should always be 1, as our model is not meant to calculate basal insulin actions. 
+## Baselines
+We compare our diffusion policy against several standard controllers:
+- **PID Controller**
+- **Tabular Q-Learning**
+- **TD3-BC**
+- **Clinical Controller** (benchmark)
+
+Our diffusion model learns a distribution over safe bolus doses conditioned on the patient state and shows strong performance, particularly on adult virtual patients over 24h, 3-day, and 7-day horizons.
+
+## Running the Code
+- The full pipeline is implemented in a Colab notebook and is self-contained.
+- Install the **SimGlucose** package for environment imports.
+- The diffusion model and all baselines run with standard Python packages.
+- Update the `wandb` login key if using Weights & Biases.
+
+## Notes
+- Only bolus insulin actions are modeled, so the action dimension must remain **1**.
+- Key hyperparameters can be adjusted at the top of the notebook.
+
+## Authors
+**Sathvika Ayyappa Prabhu**  
+**Matthew Manion**  
+University of Michigan — Fall 2025
